@@ -1,4 +1,4 @@
-import { z } from 'zod'
+import {z} from 'zod'
 
 // Toegevoegd: .describe() bij elk veld en een veld salarisMax, zodat het schema voldoet aan de eisen van huiswerk Les 11
 export const vacatureSchema = z.object({
@@ -11,4 +11,4 @@ export const vacatureSchema = z.object({
     remote: z.boolean().describe('true als thuiswerken of remote werken expliciet mogelijk is, anders false'),
 });
 
-export type Vacature = z.infer<typeof  vacatureSchema>;
+export type Vacature = z.infer<typeof vacatureSchema>;

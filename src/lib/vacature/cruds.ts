@@ -1,12 +1,12 @@
 // Toegevoegd: aparte functie in src/lib die een gecontroleerde vacature opslaat, zoals saveChat() bij de chatgeschiedenis
-import { createSupabaseServerClient } from '@/lib/supabase/server';
-import type { Vacature } from '@/lib/vacature/schema';
+import {createSupabaseServerClient} from '@/lib/supabase/server';
+import type {Vacature} from '@/lib/vacature/schema';
 
 export async function saveVacature(vacature: Vacature, tekst: string) {
     const supabase = createSupabaseServerClient();
 
     // camelCase uit het schema wordt hier omgezet naar snake_case in de database
-    const { error } = await supabase
+    const {error} = await supabase
         .from('vacatures')
         .insert({
             functietitel: vacature.functietitel,

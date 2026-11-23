@@ -114,7 +114,7 @@ export default function Chat({id, initialMessages}: ChatProps) {
                                             return <p key={index}>Geen vacaturegegevens beschikbaar.</p>
                                         }
                                         return <div key={index}>
-                                            <VacatureKaart vacature={vacature} />
+                                            <VacatureKaart vacature={vacature}/>
                                         </div>
                                     }
                                     if (part.state === 'output-error') {
@@ -122,8 +122,8 @@ export default function Chat({id, initialMessages}: ChatProps) {
                                             <p key={index}> Fout bij vacatureanalyse: {part.errorText}</p>
                                         );
                                     }
-                                        return <p key={index}>Vacatureanalyse aangeroepen</p>
-                                    }
+                                    return <p key={index}>Vacatureanalyse aangeroepen</p>
+                                }
                                 return null;
                             })}
                         </div>

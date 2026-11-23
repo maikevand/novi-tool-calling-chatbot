@@ -6,7 +6,7 @@
 type ToolPart = { type: string; state?: string };
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars -- part gebruik je zodra je de TODO's hieronder uitwerkt
-export default function ToolWeergave({ part }: { part: ToolPart }) {
+export default function ToolWeergave({part}: { part: ToolPart }) {
     // TODO: maak een switch op part.type, met een case voor elke tool, zoals 'tool-zoekVacatures' en 'tool-analyseerVacature'
     // TODO: kijk per tool naar part.state en geef het juiste component terug:
     //   - 'input-streaming' of 'input-available': <ToolBezig tekst="Vacatures zoeken..." />
