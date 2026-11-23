@@ -18,7 +18,7 @@ function formatSalaris(min: number | null, max: number | null) {
     return 'Niet vermeld';
 }
 
-export default function VacatureLijst({ vacatures }: { vacatures: Zoekresultaat[] }) {
+export default function VacatureLijst({vacatures}: { vacatures: Zoekresultaat[] }) {
     if (vacatures.length === 0) {
         return <p className="text-sm text-gray-500">Geen vacatures gevonden.</p>;
     }

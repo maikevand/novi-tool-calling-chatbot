@@ -1,7 +1,7 @@
 'use client'
 
 import {useChat} from "@ai-sdk/react";
-import type {UIMessage} from "ai";
+import type {ChatMessage} from "@/lib/chat/types";
 import {useState} from "react";
 // Aangepast: de knop gebruikt nu de Server Action die analyseert én opslaat
 import {analyseerEnBewaarVacature} from "@/lib/vacature/actions";
@@ -10,12 +10,14 @@ import VacatureKaart from "@/app/components/VacatureKaart";
 
 type ChatProps = {
     id: string;
-    initialMessages?: UIMessage[];
+    initialMessages?: ChatMessage[];
 };
 
-export default function Chat ({ id, initialMessages }: ChatProps) {
-    // TODO: geef useChat je eigen berichttype mee, bijvoorbeeld useChat<ChatMessage>(...), zodat de tool-parts getypeerd zijn
-    const { messages, sendMessage, status, error, stop, regenerate } = useChat({ id, messages: initialMessages});
+export default function Chat({id, initialMessages}: ChatProps) {
+    const {messages, sendMessage, status, error, stop, regenerate} = useChat<ChatMessage>({
+        id,
+        messages: initialMessages
+    });
     const isLoading = status === 'submitted' || status === 'streaming';
     const [input, setInput] = useState('');
 
@@ -71,9 +73,59 @@ export default function Chat ({ id, initialMessages }: ChatProps) {
                             }
                         >
                             {/* TODO: toon naast text-parts ook de tool-parts (part.type begint met 'tool-'), met <ToolWeergave part={part} /> */}
-                            {message.parts.map((part, index) =>
-                                part.type === 'text' ? <span key={index}>{part.text}</span> : null,
-                            )}
+                            {message.parts.map((part, index) => {
+                                if (part.type === 'text') {
+                                    return <span key={index}>{part.text}</span>;
+                                }
+                                if (part.type === 'tool-zoekVacatures') {
+                                    if (part.state === 'input-streaming' || part.state === 'input-available') {
+                                        return <p key={index}>Vacatures zoeken...</p>
+                                    }
+                                    if (part.state === 'output-available') {
+                                        const vacatures = part.output;
+                                        return (
+                                            <div key={index}>
+                                                {vacatures.map((vacature, i) => (
+                                                    <div key={i}>
+                                                        <p><strong>Titel: </strong>{vacature.titel}</p>
+                                                        <p><strong>Plaats: </strong>{vacature.plaats}</p>
+                                                        {vacature.url && (
+                                                            <a href={vacature.url}>Bekijk vacature</a>
+                                                        )}
+                                                    </div>
+                                                ))}
+                                                <p>Bron: <a href="https://www.adzuna.nl">Adzuna</a></p>
+                                            </div>
+                                        )
+                                    }
+                                    if
+                                    (part.state === 'output-error') {
+                                        return <p key={index}>Foutmelding: {part.errorText}</p>;
+                                    }
+                                    return <p key={index}>Vacaturezoektool aangeroepen</p>;
+                                }
+                                if (part.type === 'tool-analyseerVacature') {
+                                    if (part.state === 'input-streaming' || part.state === 'input-available') {
+                                        return <p key={index}>Vacature analyseren...</p>
+                                    }
+                                    if (part.state === 'output-available') {
+                                        const vacature = part.output.vacature;
+                                        if (!vacature) {
+                                            return <p key={index}>Geen vacaturegegevens beschikbaar.</p>
+                                        }
+                                        return <div key={index}>
+                                            <VacatureKaart vacature={vacature}/>
+                                        </div>
+                                    }
+                                    if (part.state === 'output-error') {
+                                        return (
+                                            <p key={index}> Fout bij vacatureanalyse: {part.errorText}</p>
+                                        );
+                                    }
+                                    return <p key={index}>Vacatureanalyse aangeroepen</p>
+                                }
+                                return null;
+                            })}
                         </div>
                     </div>
                 ))}
@@ -106,7 +158,7 @@ export default function Chat ({ id, initialMessages }: ChatProps) {
 
             {vacature && (
                 <div className="mt-4">
-                    <VacatureKaart vacature={vacature} onSluiten={() => setVacature(null)} />
+                    <VacatureKaart vacature={vacature} onSluiten={() => setVacature(null)}/>
                 </div>
             )}
 
@@ -114,7 +166,7 @@ export default function Chat ({ id, initialMessages }: ChatProps) {
                 onSubmit={(event) => {
                     event.preventDefault();
                     if (!input.trim()) return;
-                    sendMessage({ text: input });
+                    sendMessage({text: input});
                     setInput('');
                 }}
                 className="mt-4 flex gap-2"

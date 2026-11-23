@@ -1,4 +1,4 @@
-import type { Vacature } from '@/lib/vacature/schema';
+import type {Vacature} from '@/lib/vacature/schema';
 
 type VacatureKaartProps = {
     vacature: Vacature;
@@ -6,7 +6,7 @@ type VacatureKaartProps = {
     onSluiten?: () => void;
 };
 
-export default function VacatureKaart({ vacature, onSluiten }: VacatureKaartProps) {
+export default function VacatureKaart({vacature, onSluiten}: VacatureKaartProps) {
     return (
         <div className="rounded-lg border border-gray-200 bg-white p-4">
             <div className="mb-3 flex items-center justify-between">
