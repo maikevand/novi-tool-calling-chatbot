@@ -10,10 +10,13 @@ import {
 } from 'ai';
 import {saveChat} from "@/lib/chat/cruds";
 import {zoekVacatures} from "@/lib/tools/zoekVacatures";
+import {analyseerVacature} from "@/lib/tools/analyseerVacature";
 
 export async function POST(request: Request) {
-    const CONTEXT = 'Je bent een jobcoach. Antwoord in het Nederlands in maximaal 5 zinnen. Beantwoord geen vragen die niets met werk te maken hebben. ' +
-        'Gebruik zoekVacatures als de gebruiker naar openstaande vacatures vraagt. Verzin nooit vacatures die er niet zijn. Als er geen vacatures gevonden worden die voldoen aan de zoekopdracht, stel dan voor om een ander zoekwoord of een andere plaats te proberen.'
+    const CONTEXT = 'Je bent een jobcoach. Antwoord in het Nederlands in maximaal 5 zinnen. ' +
+        'Gebruik zoekVacatures als de gebruiker naar openstaande vacatures vraagt. Verzin nooit vacatures die er niet zijn. Als er geen vacatures gevonden worden die voldoen aan de zoekopdracht, stel dan voor om een ander zoekwoord of een andere plaats te proberen. ' +
+        'Gebruik analyseerVacature als de gebruiker een vacaturetekst aanlevert om te analyseren. ' +
+        'Geef de gebruiker antwoorden over webdevelopment zonder tool.'
     const TEMPERATURE = 0.7
     const MAX_OUTPUT_TOKENS = 500
 
@@ -36,7 +39,8 @@ export async function POST(request: Request) {
             temperature: TEMPERATURE,
             maxOutputTokens: MAX_OUTPUT_TOKENS,
             tools: {
-                zoekVacatures
+                zoekVacatures,
+                analyseerVacature
             },
             stopWhen: isStepCount(5),
             onEnd: ({usage}) => {

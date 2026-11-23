@@ -16,6 +16,16 @@
 6. Omdat dit extra tokens kost voor data die je niet nodig hebt. Op deze manier zijn de kosten lager, worden aanroepen
    sneller verwerkt en is het resultaat overzichtelijker.
 
+### 2. Maak van je Les 11-functionaliteit een tool
+
+1. Als het Zod-schema de output van een model omschrijft, wordt ontvangen data omgezet naar een gestructureerd schema.
+   Bij het input-schema bepaalt het AI-model welke invoergegevens het aan de tool meegeeft. Het Zod-schema controleert
+   of deze gegevens de juiste structuur hebben.
+2. Met behulp van context en de discription in tools wordt aangegeven of er een tool gebruikt moet worden en zo ja, welke. Ik heb geen aanpassingen
+   hoeven aanbrengen.
+3. Een knop met een Server Action legt meer controle bij de gebruiker neer. Een tool is flexibeler, maar geeft voor de
+   gebruiker minder expliciete controle over wanneer welke tool wordt ingezet.
+
 ## Opdrachtbeschrijving
 
 Tot nu toe kon je chatbot alleen antwoorden met wat het model zelf weet. Vraag je naar actuele informatie, zoals
