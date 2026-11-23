@@ -21,10 +21,16 @@
 1. Als het Zod-schema de output van een model omschrijft, wordt ontvangen data omgezet naar een gestructureerd schema.
    Bij het input-schema bepaalt het AI-model welke invoergegevens het aan de tool meegeeft. Het Zod-schema controleert
    of deze gegevens de juiste structuur hebben.
-2. Met behulp van context en de discription in tools wordt aangegeven of er een tool gebruikt moet worden en zo ja, welke. Ik heb geen aanpassingen
+2. Met behulp van context en de description in tools wordt aangegeven of er een tool gebruikt moet worden en zo ja, welke. Ik heb geen aanpassingen
    hoeven aanbrengen.
 3. Een knop met een Server Action legt meer controle bij de gebruiker neer. Een tool is flexibeler, maar geeft voor de
    gebruiker minder expliciete controle over wanneer welke tool wordt ingezet.
+
+### 3. Toon de tools in je chat
+
+1. Zoek vacatures: Input-streaming en input-available (Vacatures zoeken/vacatures analyseren), output-available (output wordt weergegeven), output-error (Foutmelding).
+2. Bij input-streaming en input-available is de tool nog niet klaar met genereren van de output.
+3. Voor de vacatures wordt een lijst getoond met functietitel, locatie en link. Voor het analyseren wordt de bestaande VacatureKaart-component gebruikt.
 
 ## Opdrachtbeschrijving
 

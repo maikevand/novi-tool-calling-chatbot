@@ -36,7 +36,7 @@ export const zoekVacatures = tool({
         if (!response.ok) {
             const foutmelding = await response.text();
             console.log("Foutmelding van Adzuna: ", foutmelding);
-            throw new Error(`Adzuna gaf status ${response.status}`);
+            throw new Error("De vacatures konden niet worden opgehaald. Probeer het later opnieuw.");
         }
 
         const data = adzunaSchema.parse(await response.json());

@@ -3,7 +3,7 @@ import {z} from "zod";
 import {extractVacature} from "@/lib/vacature/actions";
 
 export const analyseerVacature = tool({
-    description: "Als de gebruiker een vacaturetekst in de chat plakt, vat die vacature dan samen en haal de belangrijkste punten eruit.",
+    description: "Gebruik deze tool wanneer de gebruiker een bestaande vacaturetekst in de chat plakt, ook als er niet expliciet om een analyse wordt gevraagd. Analyseer de aangeleverde tekst en haal de belangrijkste vacaturegegevens eruit. Gebruik deze tool niet om nieuwe vacatures te zoeken.",
     inputSchema: z.object({
         tekst: z.string()
             .describe("De volledige vacaturetekst.")
